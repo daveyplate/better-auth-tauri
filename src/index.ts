@@ -1,2 +1,3 @@
-export * from "./tauri-plugin"
-export * from "./handle-auth-url"
+export * from "./plugin/tauri"
+export * from "./client/handle-auth-url"
+export * from "./client/handle-auth-param"

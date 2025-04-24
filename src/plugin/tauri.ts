@@ -1,7 +1,7 @@
 import type { BetterAuthPlugin } from "better-auth"
 import { createAuthMiddleware } from "better-auth/plugins"
 
-export const tauriPlugin = ({
+export const tauri = ({
     schemes
 }: {
     schemes: string[]
@@ -15,7 +15,7 @@ export const tauriPlugin = ({
                     handler: createAuthMiddleware(async (ctx) => {
                         if (!ctx.request) return
 
-                        // TODO - First Check user agent for Tauri then redirect to tauri://localhost?fetchHref=
+                        // TODO - First Check user agent for Tauri then redirect to tauri://localhost?authFetch=
 
                         // If not Tauri user agent then check callbackURL for deep link redirects
                         const url = new URL(ctx.request.url)
