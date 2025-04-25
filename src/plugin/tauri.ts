@@ -2,9 +2,11 @@ import type { BetterAuthPlugin } from "better-auth"
 import { createAuthMiddleware } from "better-auth/plugins"
 
 export const tauri = ({
-    scheme
+    scheme,
+    debugLogs
 }: {
     scheme: string
+    debugLogs?: boolean
 }) =>
     ({
         id: "tauriPlugin",
@@ -15,24 +17,30 @@ export const tauri = ({
                     handler: createAuthMiddleware(async (ctx) => {
                         if (!ctx.request) return
 
-                        console.log("[Better Auth Tauri] Request URL:", ctx.request.url)
+                        if (debugLogs) {
+                            console.log("[Better Auth Tauri] Request URL:", ctx.request.url)
+                        }
 
-                        const url = new URL(ctx.request.url)
+                        // Always use /api/auth as basePath when redirecting to Tauri
+                        const basePath = ctx.context.options.basePath ?? "/api/auth"
+                        const url = new URL(ctx.request.url.replace(basePath, "/api/auth"))
 
-                        // First Check user agent for Tauri then redirect to tauri://localhost?authFetch=
+                        // First Check user agent for Tauri/ then redirect to tauri://localhost?authFetch=
                         const userAgent = ctx.request.headers.get("user-agent")
                         const host = ctx.request.headers.get("host")
 
-                        console.log("host", host)
+                        // The host check for localhost is to prevent redirecting to tauri:// when running in dev mode
                         if (userAgent?.includes("Tauri/") && !host?.startsWith("localhost")) {
                             const authFetch = encodeURIComponent(
                                 `${url.pathname}?${url.searchParams.toString()}`
                             )
 
-                            console.log(
-                                "[Better Auth Tauri] Redirecting to:",
-                                `tauri://localhost?authFetch=${authFetch}`
-                            )
+                            if (debugLogs) {
+                                console.log(
+                                    "[Better Auth Tauri] Redirecting to:",
+                                    `tauri://localhost?authFetch=${authFetch}`
+                                )
+                            }
 
                             const redirectTo = `tauri://localhost?authFetch=${authFetch}`
                             throw ctx.redirect(redirectTo)
@@ -42,7 +50,9 @@ export const tauri = ({
                         const searchParams = url.searchParams
                         const callbackURL = searchParams.get("callbackURL")
 
-                        console.log("[Better Auth Tauri] Callback URL:", callbackURL)
+                        if (debugLogs) {
+                            console.log("[Better Auth Tauri] Callback URL:", callbackURL)
+                        }
 
                         if (!callbackURL?.startsWith(`${scheme}://`)) return
 
@@ -51,7 +61,10 @@ export const tauri = ({
 
                         const deepLinkURL = `${scheme}:/${url.pathname}?${searchParams.toString()}`
 
-                        console.log("[Better Auth Tauri] Redirecting to:", deepLinkURL)
+                        if (debugLogs) {
+                            console.log("[Better Auth Tauri] Redirecting to:", deepLinkURL)
+                        }
+
                         throw ctx.redirect(deepLinkURL)
                     })
                 }
