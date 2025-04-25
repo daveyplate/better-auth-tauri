@@ -11,6 +11,9 @@ importers:
       '@tauri-apps/plugin-deep-link':
         specifier: ^2.2.1
         version: 2.2.1
+      '@tauri-apps/plugin-http':
+        specifier: ^2.4.3
+        version: 2.4.3
       better-auth:
         specifier: '>=1.2.7'
         version: 1.2.7
@@ -373,6 +376,9 @@ packages:
 
   '@tauri-apps/plugin-deep-link@2.2.1':
     resolution: {integrity: sha512-8skZ6qIH/kWaV8d6jj3aPvvkIOuqkVk0APRDey9n9N3Ueu3n4MIbuxpAKR2EdoAyQxnXxPTNVyjw2D35/vfGyg==}
+
+  '@tauri-apps/plugin-http@2.4.3':
+    resolution: {integrity: sha512-Us8X+FikzpaZRNr4kH4HLwyXascHbM42p6LxAqRTQnHPrrqp1usaH4vxWAZalPvTbHJ3gBEMJPHusFJgtjGJjA==}
 
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
@@ -1087,6 +1093,10 @@ snapshots:
   '@tauri-apps/api@2.5.0': {}
 
   '@tauri-apps/plugin-deep-link@2.2.1':
+    dependencies:
+      '@tauri-apps/api': 2.5.0
+
+  '@tauri-apps/plugin-http@2.4.3':
     dependencies:
       '@tauri-apps/api': 2.5.0
 

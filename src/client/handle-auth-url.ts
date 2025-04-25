@@ -1,38 +1,30 @@
-import type { AuthClient } from "../types/auth-client"
 import type { FetchError } from "../types/fetch-error"
 
 export interface HandleAuthUrlOptions {
-    authClient: AuthClient
-    url: string
     scheme: string
-    basePath?: string
+    url: string
     onError?: (error: FetchError) => void
-    navigate?: (url: string) => void
+    onSuccess?: (callbackURL?: string | null) => void
 }
 
-export async function handleAuthUrl({
-    authClient,
-    url,
-    scheme,
-    basePath = "/api/auth",
-    onError,
-    navigate = (url) => {
-        window.location.href = url
-    }
-}: HandleAuthUrlOptions) {
-    if (!url.startsWith(`${scheme}:/${basePath}`)) return false
+export async function handleAuthUrl({ scheme, url, onError, onSuccess }: HandleAuthUrlOptions) {
+    if (!url.startsWith(`${scheme}:`)) return false
 
-    const href = url.replace(`${scheme}:/${basePath}`, "")
+    const href = url.replace(`${scheme}:/`, "")
 
-    const { error } = await authClient.$fetch(href)
+    console.log("[Better Auth Tauri] handleAuthUrl fetch", href)
 
-    if (error) {
-        onError?.(error)
-    } else {
+    const response = await fetch(href)
+
+    if (response.ok) {
         const searchParams = new URL(url).searchParams
         const callbackURL = searchParams.get("callbackURL")
 
-        if (callbackURL) navigate?.(callbackURL)
+        console.log("[Better Auth Tauri] onSuccess callbackURL", callbackURL)
+        onSuccess?.(callbackURL)
+    } else {
+        const error = await response.json()
+        onError?.(error)
     }
 
     return true

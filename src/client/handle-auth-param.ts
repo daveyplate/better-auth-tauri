@@ -1,27 +1,28 @@
-import type { AuthClient } from "../types/auth-client"
-import type { FetchError } from "../types/fetch-error"
+import { fetch } from "@tauri-apps/plugin-http"
 
 export const handleAuthParam = async ({
-    authClient,
     onError,
     onSuccess
 }: {
-    authClient: AuthClient
-    onError?: (error: FetchError) => void
+    // biome-ignore lint/suspicious/noExplicitAny:
+    onError?: (error: any) => void
     onSuccess?: () => Promise<void> | void
 }) => {
     if (window.location.protocol !== "tauri:") return
 
     const searchParams = new URLSearchParams(window.location.search)
-    const href = searchParams.get("authFetch")
+    const authFetch = searchParams.get("authFetch")
 
-    if (!href) return
+    if (!authFetch) return
 
-    const { error } = await authClient.$fetch(href)
+    console.log("[Better Auth Tauri] handleAuthParam fetch", authFetch)
 
-    if (error) {
-        onError?.(error)
-    } else {
+    const response = await fetch(authFetch)
+
+    if (response.ok) {
         onSuccess?.()
+    } else {
+        const error = await response.json()
+        onError?.(error)
     }
 }
