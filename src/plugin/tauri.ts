@@ -46,6 +46,8 @@ export const tauri = ({
                             throw ctx.redirect(redirectTo)
                         }
 
+                        if (userAgent?.includes("tauri")) return
+
                         // If not Tauri user agent then check callbackURL for deep link redirects
                         const searchParams = url.searchParams
                         const callbackURL = searchParams.get("callbackURL")
@@ -54,10 +56,13 @@ export const tauri = ({
                             console.log("[Better Auth Tauri] Callback URL:", callbackURL)
                         }
 
-                        if (!callbackURL?.startsWith(`${scheme}://`)) return
+                        if (!callbackURL?.startsWith(`${scheme}://`) && !searchParams.has("tauri"))
+                            return
 
                         // Remove the Deep Link URL scheme from the callbackURL
-                        searchParams.set("callbackURL", callbackURL.replace(`${scheme}:/`, ""))
+                        if (callbackURL) {
+                            searchParams.set("callbackURL", callbackURL.replace(`${scheme}:/`, ""))
+                        }
 
                         const deepLinkURL = `${scheme}:/${url.pathname}?${searchParams.toString()}`
 
