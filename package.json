@@ -6,18 +6,13 @@
     "module": "dist/index",
     "types": "dist/index",
     "exports": "./dist/index.js",
-    "files": [
-        "src",
-        "dist"
-    ],
+    "files": ["src", "dist"],
     "scripts": {
         "build": "tsup --clean --dts",
         "dev": "tsc-watch --onSuccess 'biome check --fix'",
         "prepublishOnly": "rm -rf dist && tsup --clean --dts"
     },
-    "keywords": [
-        "typescript"
-    ],
+    "keywords": ["typescript"],
     "author": "daveycodez",
     "license": "MIT",
     "devDependencies": {

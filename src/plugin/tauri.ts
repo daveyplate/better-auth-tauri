@@ -38,14 +38,12 @@ export const tauri = ({
                                 `${url.pathname}?${url.searchParams.toString()}`
                             )
 
+                            const redirectTo = `tauri://localhost?authFetch=${authFetch}`
+
                             if (debugLogs) {
-                                console.log(
-                                    "[Better Auth Tauri] Redirecting to:",
-                                    `tauri://localhost?authFetch=${authFetch}`
-                                )
+                                console.log("[Better Auth Tauri] Redirecting to:", redirectTo)
                             }
 
-                            const redirectTo = `tauri://localhost?authFetch=${authFetch}`
                             throw ctx.redirect(redirectTo)
                         }
 
