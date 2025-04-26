@@ -1,1 +1,1 @@
-export * from "./react/use-auth-deep-links"
+export * from "./react/use-better-auth-tauri"

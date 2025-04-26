@@ -45,6 +45,14 @@ export function setupBetterAuthTauri({
         })
     }
 
-    getCurrent().then(handleUrls)
-    onOpenUrl(handleUrls)
+    if (!sessionStorage.getItem("getCurrentUrlChecked")) {
+        getCurrent().then(handleUrls)
+        sessionStorage.setItem("getCurrentUrlChecked", "true")
+    }
+
+    const unlisten = onOpenUrl(handleUrls)
+
+    return () => {
+        unlisten.then((f) => f())
+    }
 }

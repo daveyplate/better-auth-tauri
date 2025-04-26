@@ -6,9 +6,8 @@ export const handleAuthFetchParam = async ({
     onRequest,
     onSuccess
 }: Omit<SetupBetterAuthTauriOptions, "scheme">) => {
-    if (window.location.protocol !== "tauri:") return
-
     const basePath = "/api/auth"
+    if (window.location.protocol !== "tauri:") return
 
     const searchParams = new URLSearchParams(window.location.search)
     const authFetch = searchParams.get("authFetch")
@@ -17,17 +16,18 @@ export const handleAuthFetchParam = async ({
 
     const href = authFetch.replace(basePath, "")
 
-    console.log("[Better Auth Tauri] handleAuthParam fetch", href)
+    console.log("[Better Auth Tauri] handleAuthFetchParam fetch", href)
 
     onRequest?.(href)
     const response = await authClient.$fetch(href)
 
-    console.log("[Better Auth Tauri] handleAuthParam response", response, href)
+    console.log("[Better Auth Tauri] handleAuthFetchParam response", response, href)
+
     if (response.error?.message || response.error?.statusText) {
-        console.error("[Better Auth Tauri] handleAuthParam error", response.error, href)
+        console.error("[Better Auth Tauri] handleAuthFetchParam error", response.error, href)
         onError?.(response.error)
     } else {
-        console.log("[Better Auth Tauri] handleAuthParam success")
+        console.log("[Better Auth Tauri] handleAuthFetchParam onSuccess", href)
         onSuccess?.()
     }
 }

@@ -1,12 +1,15 @@
 import type { BetterAuthPlugin } from "better-auth"
 import { createAuthMiddleware } from "better-auth/plugins"
+import type { SocialProvider } from "better-auth/social-providers"
 
 export const tauri = ({
     scheme,
-    debugLogs
+    debugLogs,
+    callbackURL = "/"
 }: {
     scheme: string
     debugLogs?: boolean
+    callbackURL?: string
 }) =>
     ({
         id: "tauriPlugin",
@@ -46,31 +49,37 @@ export const tauri = ({
                             throw ctx.redirect(redirectTo)
                         }
 
-                        if (userAgent?.includes("tauri")) return
+                        if (userAgent?.includes("tauri")) {
+                            if (ctx.context.options.socialProviders) {
+                                Object.keys(ctx.context.options.socialProviders).map((key) => {
+                                    ctx.context.options.socialProviders![
+                                        key as SocialProvider
+                                    ]!.redirectURI =
+                                        `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
+                                })
+                            }
+                        } else {
+                            // If not Tauri user agent then check callbackURL for deep link redirects
+                            const searchParams = url.searchParams
+                            const callbackURL = searchParams.get("callbackURL")
 
-                        // If not Tauri user agent then check callbackURL for deep link redirects
-                        const searchParams = url.searchParams
-                        const callbackURL = searchParams.get("callbackURL")
+                            if (debugLogs) {
+                                console.log("[Better Auth Tauri] Callback URL:", callbackURL)
+                            }
 
-                        if (debugLogs) {
-                            console.log("[Better Auth Tauri] Callback URL:", callbackURL)
-                        }
+                            if (!callbackURL?.startsWith(`${scheme}://`)) return
 
-                        if (!callbackURL?.startsWith(`${scheme}://`) && !searchParams.has("tauri"))
-                            return
-
-                        // Remove the Deep Link URL scheme from the callbackURL
-                        if (callbackURL) {
+                            // Remove the Deep Link URL scheme from the callbackURL
                             searchParams.set("callbackURL", callbackURL.replace(`${scheme}:/`, ""))
+
+                            const deepLinkURL = `${scheme}:/${url.pathname}?${searchParams.toString()}`
+
+                            if (debugLogs) {
+                                console.log("[Better Auth Tauri] Redirecting to:", deepLinkURL)
+                            }
+
+                            throw ctx.redirect(deepLinkURL)
                         }
-
-                        const deepLinkURL = `${scheme}:/${url.pathname}?${searchParams.toString()}`
-
-                        if (debugLogs) {
-                            console.log("[Better Auth Tauri] Redirecting to:", deepLinkURL)
-                        }
-
-                        throw ctx.redirect(deepLinkURL)
                     })
                 }
             ]

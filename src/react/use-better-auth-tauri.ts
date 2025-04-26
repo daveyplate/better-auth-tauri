@@ -12,7 +12,7 @@ export function useBetterAuthTauri({
     onSuccess
 }: SetupBetterAuthTauriOptions) {
     useEffect(() => {
-        setupBetterAuthTauri({
+        return setupBetterAuthTauri({
             authClient,
             scheme,
             onError,
