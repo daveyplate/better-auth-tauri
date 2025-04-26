@@ -32,6 +32,11 @@ export const tauri = ({
                         const userAgent = ctx.request.headers.get("user-agent")
                         const host = ctx.request.headers.get("host")
 
+                        if (debugLogs) {
+                            console.log("[Better Auth Tauri] User agent:", userAgent, url.pathname)
+                            console.log("[Better Auth Tauri] Host:", host, url.pathname)
+                        }
+
                         // The host check for localhost is to prevent redirecting to tauri:// when running in dev mode
                         if (userAgent?.includes("Tauri/") && !host?.startsWith("localhost")) {
                             const authFetch = encodeURIComponent(
@@ -41,13 +46,24 @@ export const tauri = ({
                             const redirectTo = `tauri://localhost?authFetch=${authFetch}`
 
                             if (debugLogs) {
-                                console.log("[Better Auth Tauri] Redirecting to:", redirectTo)
+                                console.log(
+                                    "[Better Auth Tauri] Redirecting to:",
+                                    redirectTo,
+                                    url.pathname
+                                )
                             }
 
                             throw ctx.redirect(redirectTo)
                         }
 
                         if (userAgent?.includes("tauri")) {
+                            if (debugLogs) {
+                                console.log(
+                                    "[Better Auth Tauri] User agent is Tauri HTTP plugin",
+                                    url.pathname
+                                )
+                            }
+
                             if (ctx.context.options.socialProviders) {
                                 Object.keys(ctx.context.options.socialProviders).map((key) => {
                                     ctx.context.options.socialProviders![
@@ -62,7 +78,11 @@ export const tauri = ({
                             const callbackURL = searchParams.get("callbackURL")
 
                             if (debugLogs) {
-                                console.log("[Better Auth Tauri] Callback URL:", callbackURL)
+                                console.log(
+                                    "[Better Auth Tauri] Callback URL:",
+                                    callbackURL,
+                                    url.pathname
+                                )
                             }
 
                             if (!callbackURL?.startsWith(`${scheme}://`)) return
@@ -73,7 +93,11 @@ export const tauri = ({
                             const deepLinkURL = `${scheme}:/${url.pathname}?${searchParams.toString()}`
 
                             if (debugLogs) {
-                                console.log("[Better Auth Tauri] Redirecting to:", deepLinkURL)
+                                console.log(
+                                    "[Better Auth Tauri] Redirecting to:",
+                                    deepLinkURL,
+                                    url.pathname
+                                )
                             }
 
                             if (url.pathname.includes("/auth/callback/google")) {
@@ -83,6 +107,13 @@ export const tauri = ({
                             }
 
                             throw ctx.redirect(deepLinkURL)
+                        } else {
+                            if (debugLogs) {
+                                console.log(
+                                    "[Better Auth Tauri] User agent is not Tauri/",
+                                    url.pathname
+                                )
+                            }
                         }
                     })
                 }
