@@ -3,10 +3,12 @@ import { createAuthEndpoint, createAuthMiddleware } from "better-auth/plugins"
 import type { SocialProvider } from "better-auth/social-providers"
 
 export const tauri = ({
+    baseURL = "tauri://localhost",
     callbackURL = "/",
     debugLogs,
     scheme
 }: {
+    baseURL?: string
     callbackURL?: string
     debugLogs?: boolean
     scheme: string
@@ -43,7 +45,7 @@ export const tauri = ({
                                 `${url.pathname}?${url.searchParams.toString()}`
                             )
 
-                            const redirectTo = `tauri://localhost?authFetch=${authFetch}`
+                            const redirectTo = `${baseURL}?authFetch=${authFetch}`
 
                             if (debugLogs) {
                                 console.log(

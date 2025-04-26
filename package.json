@@ -3,10 +3,7 @@
     "homepage": "https://github.com/daveyplate/better-auth-tauri",
     "version": "0.0.8",
     "description": "Better Auth Tauri Plugin",
-    "files": [
-        "src",
-        "dist"
-    ],
+    "files": ["src", "dist"],
     "scripts": {
         "build": "tsup --clean --dts",
         "dev": "tsc-watch --onSuccess 'biome check --fix'",
@@ -47,9 +44,7 @@
             }
         }
     },
-    "keywords": [
-        "typescript"
-    ],
+    "keywords": ["typescript"],
     "author": "daveycodez",
     "license": "MIT",
     "devDependencies": {
@@ -66,15 +61,13 @@
         "typescript": "^5.8.3"
     },
     "peerDependencies": {
+        "@daveyplate/tauri-fetch": ">=1.0.1",
+        "@tauri-apps/api": ">=2.5.0",
+        "@tauri-apps/plugin-deep-link": ">=2.2.1",
+        "@tauri-apps/plugin-http": ">=2.4.3",
         "better-auth": ">=1.2.7",
         "react": ">=18.0.0",
         "react-dom": ">=18.0.0"
     },
-    "packageManager": "pnpm@10.9.0",
-    "dependencies": {
-        "@daveyplate/tauri-fetch": "^1.0.1",
-        "@tauri-apps/api": "^2.5.0",
-        "@tauri-apps/plugin-deep-link": "^2.2.1",
-        "@tauri-apps/plugin-http": "^2.4.3"
-    }
+    "packageManager": "pnpm@10.9.0"
 }

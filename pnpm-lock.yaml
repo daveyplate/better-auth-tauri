@@ -9,16 +9,16 @@ importers:
   .:
     dependencies:
       '@daveyplate/tauri-fetch':
-        specifier: ^1.0.1
+        specifier: '>=1.0.1'
         version: 1.0.1(@tauri-apps/api@2.5.0)(@tauri-apps/plugin-http@2.4.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tauri-apps/api':
-        specifier: ^2.5.0
+        specifier: '>=2.5.0'
         version: 2.5.0
       '@tauri-apps/plugin-deep-link':
-        specifier: ^2.2.1
+        specifier: '>=2.2.1'
         version: 2.2.1
       '@tauri-apps/plugin-http':
-        specifier: ^2.4.3
+        specifier: '>=2.4.3'
         version: 2.4.3
       better-auth:
         specifier: '>=1.2.7'
