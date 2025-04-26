@@ -6,6 +6,7 @@ import {
 
 export function useBetterAuthTauri({
     authClient,
+    debugLogs,
     scheme,
     onError,
     onRequest,
@@ -14,10 +15,11 @@ export function useBetterAuthTauri({
     useEffect(() => {
         return setupBetterAuthTauri({
             authClient,
+            debugLogs,
             scheme,
             onError,
             onRequest,
             onSuccess
         })
-    }, [authClient, scheme, onError, onRequest, onSuccess])
+    }, [authClient, debugLogs, scheme, onError, onRequest, onSuccess])
 }

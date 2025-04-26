@@ -8,6 +8,7 @@ import { handleAuthFetchParam } from "./handle-auth-fetch-param"
 
 export interface SetupBetterAuthTauriOptions {
     authClient: AuthClient
+    debugLogs?: boolean
     scheme: string
     onError?: (error: FetchError) => void
     onRequest?: (href: string) => void
@@ -16,6 +17,7 @@ export interface SetupBetterAuthTauriOptions {
 
 export function setupBetterAuthTauri({
     authClient,
+    debugLogs,
     scheme,
     onError,
     onRequest,
@@ -24,14 +26,23 @@ export function setupBetterAuthTauri({
     if (!isTauri()) return
 
     if (window.location.protocol === "tauri:" || process.env.NODE_ENV === "production") {
+        if (debugLogs) {
+            console.log("[Better Auth Tauri] setupTauriFetch")
+        }
+
         setupTauriFetch()
 
         handleAuthFetchParam({
             authClient,
+            debugLogs,
             onError,
             onRequest,
             onSuccess
         })
+    } else {
+        if (debugLogs) {
+            console.log("[Better Auth Tauri] skip setupTauriFetch")
+        }
     }
 
     const handleUrls = (urls: string[] | null) => {
@@ -42,6 +53,7 @@ export function setupBetterAuthTauri({
             authClient,
             scheme,
             url,
+            debugLogs,
             onError,
             onRequest,
             onSuccess
@@ -50,6 +62,11 @@ export function setupBetterAuthTauri({
 
     if (!sessionStorage.getItem("getCurrentUrlChecked")) {
         getCurrent().then(handleUrls)
+
+        if (debugLogs) {
+            console.log("[Better Auth Tauri] check getCurrent() url")
+        }
+
         sessionStorage.setItem("getCurrentUrlChecked", "true")
     }
 

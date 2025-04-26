@@ -2,6 +2,7 @@ import type { SetupBetterAuthTauriOptions } from "./setup-better-auth-tauri"
 
 export const handleAuthFetchParam = async ({
     authClient,
+    debugLogs,
     onError,
     onRequest,
     onSuccess
@@ -14,18 +15,28 @@ export const handleAuthFetchParam = async ({
     const basePath = "/api/auth"
     const href = authFetch.replace(basePath, "")
 
-    console.log("[Better Auth Tauri] handleAuthFetchParam fetch", href)
+    if (debugLogs) {
+        console.log("[Better Auth Tauri] handleAuthFetchParam fetch", href)
+    }
 
     onRequest?.(href)
     const response = await authClient.$fetch(href)
 
-    console.log("[Better Auth Tauri] handleAuthFetchParam response", response, href)
+    if (debugLogs) {
+        console.log("[Better Auth Tauri] handleAuthFetchParam response", response, href)
+    }
 
     if (response.error?.message || response.error?.statusText) {
-        console.error("[Better Auth Tauri] handleAuthFetchParam error", response.error, href)
+        if (debugLogs) {
+            console.error("[Better Auth Tauri] handleAuthFetchParam error", response.error, href)
+        }
+
         onError?.(response.error)
     } else {
-        console.log("[Better Auth Tauri] handleAuthFetchParam onSuccess", href)
+        if (debugLogs) {
+            console.log("[Better Auth Tauri] handleAuthFetchParam onSuccess", href)
+        }
+
         onSuccess?.()
     }
 }
