@@ -2,10 +2,10 @@ import { setupTauriFetch } from "@daveyplate/tauri-fetch"
 import { getCurrent, onOpenUrl } from "@tauri-apps/plugin-deep-link"
 import type { AuthClient } from "../types/auth-client"
 import type { FetchError } from "../types/fetch-error"
-import { handleAuthParam } from "./handle-auth-param"
-import { handleAuthUrl } from "./handle-auth-url"
+import { handleAuthDeepLink } from "./handle-auth-deep-link"
+import { handleAuthFetchParam } from "./handle-auth-fetch-param"
 
-export interface HandleAuthDeepLinksOptions {
+export interface SetupBetterAuthTauriOptions {
     authClient: AuthClient
     scheme: string
     onError?: (error: FetchError) => void
@@ -13,22 +13,29 @@ export interface HandleAuthDeepLinksOptions {
     onSuccess?: (callbackURL?: string | null) => void
 }
 
-export function handleAuthDeepLinks({
+export function setupBetterAuthTauri({
     authClient,
     scheme,
     onError,
     onRequest,
     onSuccess
-}: HandleAuthDeepLinksOptions) {
+}: SetupBetterAuthTauriOptions) {
     if (window.location.protocol === "tauri:") {
         setupTauriFetch()
+
+        handleAuthFetchParam({
+            authClient,
+            onError,
+            onRequest,
+            onSuccess
+        })
     }
 
     const handleUrls = (urls: string[] | null) => {
         if (!urls?.length) return
         const url = urls[0]
 
-        handleAuthUrl({
+        handleAuthDeepLink({
             authClient,
             scheme,
             url,
@@ -40,11 +47,4 @@ export function handleAuthDeepLinks({
 
     getCurrent().then(handleUrls)
     onOpenUrl(handleUrls)
-
-    handleAuthParam({
-        authClient,
-        onError,
-        onRequest,
-        onSuccess
-    })
 }

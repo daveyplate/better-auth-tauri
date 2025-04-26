@@ -1,11 +1,11 @@
-import type { HandleAuthDeepLinksOptions } from "./handle-auth-deep-links"
+import type { SetupBetterAuthTauriOptions } from "./setup-better-auth-tauri"
 
-export const handleAuthParam = async ({
+export const handleAuthFetchParam = async ({
     authClient,
     onError,
     onRequest,
     onSuccess
-}: Omit<HandleAuthDeepLinksOptions, "scheme">) => {
+}: Omit<SetupBetterAuthTauriOptions, "scheme">) => {
     if (window.location.protocol !== "tauri:") return
 
     const basePath = "/api/auth"

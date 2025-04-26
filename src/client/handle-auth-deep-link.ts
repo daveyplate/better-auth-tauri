@@ -1,13 +1,13 @@
-import type { HandleAuthDeepLinksOptions } from "./handle-auth-deep-links"
+import type { SetupBetterAuthTauriOptions } from "./setup-better-auth-tauri"
 
-export async function handleAuthUrl({
+export async function handleAuthDeepLink({
     authClient,
     scheme,
     url,
     onError,
     onRequest,
     onSuccess
-}: HandleAuthDeepLinksOptions & { url: string }) {
+}: SetupBetterAuthTauriOptions & { url: string }) {
     const basePath = "/api/auth"
     if (!url.startsWith(`${scheme}:/${basePath}`)) return false
 
