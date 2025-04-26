@@ -1,6 +1,8 @@
 import { setupTauriFetch } from "@daveyplate/tauri-fetch"
 import { isTauri } from "@tauri-apps/api/core"
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow"
 import { getCurrent, onOpenUrl } from "@tauri-apps/plugin-deep-link"
+
 import type { AuthClient } from "../types/auth-client"
 import type { FetchError } from "../types/fetch-error"
 import { handleAuthDeepLink } from "./handle-auth-deep-link"
@@ -9,6 +11,7 @@ import { handleAuthFetchParam } from "./handle-auth-fetch-param"
 export interface SetupBetterAuthTauriOptions {
     authClient: AuthClient
     debugLogs?: boolean
+    mainWindowLabel?: string
     scheme: string
     onError?: (error: FetchError) => void
     onRequest?: (href: string) => void
@@ -18,6 +21,7 @@ export interface SetupBetterAuthTauriOptions {
 export function setupBetterAuthTauri({
     authClient,
     debugLogs,
+    mainWindowLabel = "main",
     scheme,
     onError,
     onRequest,
@@ -61,13 +65,15 @@ export function setupBetterAuthTauri({
     }
 
     if (!sessionStorage.getItem("getCurrentUrlChecked")) {
-        getCurrent().then(handleUrls)
+        if (getCurrentWebviewWindow().label === mainWindowLabel) {
+            getCurrent().then(handleUrls)
 
-        if (debugLogs) {
-            console.log("[Better Auth Tauri] check getCurrent() url")
+            if (debugLogs) {
+                console.log("[Better Auth Tauri] check getCurrent() url")
+            }
+
+            sessionStorage.setItem("getCurrentUrlChecked", "true")
         }
-
-        sessionStorage.setItem("getCurrentUrlChecked", "true")
     }
 
     const unlisten = onOpenUrl(handleUrls)

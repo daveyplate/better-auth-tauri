@@ -7,6 +7,7 @@ import {
 export function useBetterAuthTauri({
     authClient,
     debugLogs,
+    mainWindowLabel,
     scheme,
     onError,
     onRequest,
@@ -16,10 +17,11 @@ export function useBetterAuthTauri({
         return setupBetterAuthTauri({
             authClient,
             debugLogs,
+            mainWindowLabel,
             scheme,
             onError,
             onRequest,
             onSuccess
         })
-    }, [authClient, debugLogs, scheme, onError, onRequest, onSuccess])
+    }, [authClient, debugLogs, mainWindowLabel, scheme, onError, onRequest, onSuccess])
 }
