@@ -3,21 +3,48 @@
     "homepage": "https://github.com/daveyplate/better-auth-tauri",
     "version": "0.0.3",
     "description": "Better Auth Tauri Plugin",
-    "module": "dist/index",
-    "types": "dist/index",
-    "exports": "./dist/index.js",
-    "files": [
-        "src",
-        "dist"
-    ],
+    "files": ["src", "dist"],
     "scripts": {
         "build": "tsup --clean --dts",
         "dev": "tsc-watch --onSuccess 'biome check --fix'",
         "prepublishOnly": "rm -rf dist && tsup --clean --dts"
     },
-    "keywords": [
-        "typescript"
-    ],
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
+            },
+            "require": {
+                "types": "./dist/index.d.cts",
+                "default": "./dist/index.cjs"
+            }
+        },
+        "./react": {
+            "import": {
+                "types": "./dist/react.d.ts",
+                "default": "./dist/react.js"
+            },
+            "require": {
+                "types": "./dist/react.d.cts",
+                "default": "./dist/react.cjs"
+            }
+        },
+        "./server": {
+            "import": {
+                "types": "./dist/server.d.ts",
+                "default": "./dist/server.js"
+            },
+            "require": {
+                "types": "./dist/server.d.cts",
+                "default": "./dist/server.cjs"
+            }
+        }
+    },
+    "keywords": ["typescript"],
     "author": "daveycodez",
     "license": "MIT",
     "devDependencies": {
