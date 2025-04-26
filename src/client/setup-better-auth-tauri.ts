@@ -1,4 +1,5 @@
 import { setupTauriFetch } from "@daveyplate/tauri-fetch"
+import { isTauri } from "@tauri-apps/api/core"
 import { getCurrent, onOpenUrl } from "@tauri-apps/plugin-deep-link"
 import type { AuthClient } from "../types/auth-client"
 import type { FetchError } from "../types/fetch-error"
@@ -20,6 +21,8 @@ export function setupBetterAuthTauri({
     onRequest,
     onSuccess
 }: SetupBetterAuthTauriOptions) {
+    if (!isTauri()) return
+
     if (window.location.protocol === "tauri:") {
         setupTauriFetch()
 

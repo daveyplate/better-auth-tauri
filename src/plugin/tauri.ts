@@ -58,7 +58,7 @@ export const tauri = ({
                                         `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
                                 })
                             }
-                        } else {
+                        } else if (!userAgent?.includes("Tauri/")) {
                             // If not Tauri user agent then check callbackURL for deep link redirects
                             const searchParams = url.searchParams
                             const callbackURL = searchParams.get("callbackURL")
