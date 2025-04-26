@@ -1,15 +1,15 @@
 import type { BetterAuthPlugin } from "better-auth"
-import { createAuthMiddleware } from "better-auth/plugins"
+import { createAuthEndpoint, createAuthMiddleware } from "better-auth/plugins"
 import type { SocialProvider } from "better-auth/social-providers"
 
 export const tauri = ({
-    scheme,
+    callbackURL = "/",
     debugLogs,
-    callbackURL = "/"
+    scheme
 }: {
-    scheme: string
-    debugLogs?: boolean
     callbackURL?: string
+    debugLogs?: boolean
+    scheme: string
 }) =>
     ({
         id: "tauriPlugin",
@@ -76,10 +76,36 @@ export const tauri = ({
                                 console.log("[Better Auth Tauri] Redirecting to:", deepLinkURL)
                             }
 
+                            if (url.pathname.includes("/auth/callback/google")) {
+                                throw ctx.redirect(
+                                    `${ctx.context.baseURL}/tauri/redirect?redirectTo=${encodeURIComponent(deepLinkURL)}`
+                                )
+                            }
+
                             throw ctx.redirect(deepLinkURL)
                         }
                     })
                 }
             ]
+        },
+        endpoints: {
+            getTauriRedirect: createAuthEndpoint(
+                "/tauri/redirect",
+                {
+                    method: "GET"
+                },
+                async (ctx) => {
+                    if (!ctx.request) return
+                    const redirectTo = new URL(ctx.request.url).searchParams.get("redirectTo")
+                    return new Response(
+                        `<script>window.location.href = '${redirectTo}'; setTimeout(() => window.location.replace('about:blank'));</script>`,
+                        {
+                            headers: {
+                                "Content-Type": "text/html"
+                            }
+                        }
+                    )
+                }
+            )
         }
     }) satisfies BetterAuthPlugin
