@@ -6,14 +6,12 @@ export const handleAuthFetchParam = async ({
     onRequest,
     onSuccess
 }: Omit<SetupBetterAuthTauriOptions, "scheme">) => {
-    const basePath = "/api/auth"
-    if (window.location.protocol !== "tauri:") return
-
     const searchParams = new URLSearchParams(window.location.search)
     const authFetch = searchParams.get("authFetch")
 
     if (!authFetch) return
 
+    const basePath = "/api/auth"
     const href = authFetch.replace(basePath, "")
 
     console.log("[Better Auth Tauri] handleAuthFetchParam fetch", href)
