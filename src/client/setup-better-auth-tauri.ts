@@ -23,7 +23,7 @@ export function setupBetterAuthTauri({
 }: SetupBetterAuthTauriOptions) {
     if (!isTauri()) return
 
-    if (window.location.protocol === "tauri:") {
+    if (window.location.protocol === "tauri:" || process.env.NODE_ENV === "production") {
         setupTauriFetch()
 
         handleAuthFetchParam({
