@@ -98,7 +98,7 @@ export const tauri = ({
                     if (!ctx.request) return
                     const redirectTo = new URL(ctx.request.url).searchParams.get("redirectTo")
                     return new Response(
-                        `<script>window.location.href = '${redirectTo}'; setTimeout(() => window.location.replace('about:blank'));</script>`,
+                        `<script>window.location.href = '${redirectTo}';</script>`,
                         {
                             headers: {
                                 "Content-Type": "text/html"
