@@ -110,7 +110,7 @@ export const tauri = ({
                         } else {
                             if (debugLogs) {
                                 console.log(
-                                    "[Better Auth Tauri] User agent is not Tauri/",
+                                    "[Better Auth Tauri] User agent is Tauri/",
                                     url.pathname
                                 )
                             }
