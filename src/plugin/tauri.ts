@@ -121,7 +121,9 @@ export const tauri = ({
         hooks: {
             before: [
                 {
-                    matcher: (context) => !context.request?.url?.includes("reset-password"),
+                    matcher: (context) =>
+                        !context.request?.url?.includes("reset-password") &&
+                        !context.request?.url?.includes("tauri/redirect"),
                     handler: createAuthMiddleware(async (ctx) => {
                         if (!ctx.request) return
 
