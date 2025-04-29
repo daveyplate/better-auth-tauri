@@ -36,8 +36,6 @@ export const tauri = ({
                         const url = new URL(ctx.request.url)
                         url.pathname = url.pathname.replace(basePath, "/api/auth")
 
-                        // First Check user agent for Tauri/ then redirect to tauri://localhost?authFetch=
-
                         if (debugLogs) {
                             const userAgent = ctx.request.headers.get("user-agent")
                             const host = ctx.request.headers.get("host")
