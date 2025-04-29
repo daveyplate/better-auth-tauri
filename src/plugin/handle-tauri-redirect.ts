@@ -20,15 +20,14 @@ export function handleTauriRedirect({
     const host = ctx.request.headers.get("host")
 
     // The host check for localhost is to prevent redirecting to tauri:// when running in dev mode
-    if (userAgent?.includes("Tauri/") && !host?.startsWith("localhost")) {
-        const authFetch = encodeURIComponent(`${url.pathname}?${url.searchParams.toString()}`)
+    if (!userAgent?.includes("Tauri/") || host?.startsWith("localhost")) return
 
-        const redirectTo = `${baseURL}?authFetch=${authFetch}`
+    const authFetch = encodeURIComponent(`${url.pathname}?${url.searchParams.toString()}`)
+    const redirectTo = `${baseURL}?authFetch=${authFetch}`
 
-        if (debugLogs) {
-            console.log("[Better Auth Tauri] Redirecting to:", redirectTo, url.pathname)
-        }
-
-        throw ctx.redirect(redirectTo)
+    if (debugLogs) {
+        console.log("[Better Auth Tauri] Redirecting to:", redirectTo, url.pathname)
     }
+
+    throw ctx.redirect(redirectTo)
 }

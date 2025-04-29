@@ -16,22 +16,21 @@ export function appendCallbackURL({
     url: URL
 }) {
     if (!ctx.request) return
+    if (!ctx.context.options.socialProviders) return
 
     const userAgent = ctx.request.headers.get("user-agent")
     if (!userAgent?.includes("tauri")) return
 
-    if (ctx.context.options.socialProviders) {
-        Object.keys(ctx.context.options.socialProviders).map((key) => {
-            if (debugLogs) {
-                console.log(
-                    "[Better Auth Tauri] Appending callback URL to social provider",
-                    key,
-                    `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
-                )
-            }
-
-            ctx.context.options.socialProviders![key as SocialProvider]!.redirectURI =
+    Object.keys(ctx.context.options.socialProviders).map((key) => {
+        if (debugLogs) {
+            console.log(
+                "[Better Auth Tauri] Appending callback URL to social provider",
+                key,
                 `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
-        })
-    }
+            )
+        }
+
+        ctx.context.options.socialProviders![key as SocialProvider]!.redirectURI =
+            `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
+    })
 }
