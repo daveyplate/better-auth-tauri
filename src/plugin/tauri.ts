@@ -11,7 +11,7 @@ export const tauri = ({
     debugLogs,
     scheme,
     successText = "Your authentication was successful. You may now close this window and return to the application.",
-    successURL = "tauri://localhost"
+    successURL
 }: {
     baseURL?: string
     callbackURL?: string

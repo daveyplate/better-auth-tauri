@@ -12,13 +12,13 @@ export function checkCallbackURL({
     ctx: MiddlewareContext<MiddlewareOptions, AuthContext>
     debugLogs?: boolean
     scheme: string
-    successURL: string
+    successURL?: string
     url: URL
 }) {
     if (!ctx.request) return
 
     const userAgent = ctx.request.headers.get("user-agent")
-    if (userAgent?.includes("Tauri/")) return
+    if (userAgent?.includes("Tauri/") || userAgent?.includes("tauri")) return
 
     // If not Tauri user agent then check callbackURL for deep link redirects
     const searchParams = url.searchParams
