@@ -6,31 +6,37 @@ export function appendCallbackURL({
     callbackURL,
     ctx,
     debugLogs,
-    scheme,
-    url
+    scheme
 }: {
     callbackURL: string
     ctx: MiddlewareContext<MiddlewareOptions, AuthContext>
     debugLogs?: boolean
     scheme: string
-    url: URL
 }) {
     if (!ctx.request) return
     if (!ctx.context.options.socialProviders) return
+    if (ctx.path !== "/sign-in/social") return
 
     const userAgent = ctx.request.headers.get("user-agent")
-    if (!userAgent?.includes("tauri")) return
 
     Object.keys(ctx.context.options.socialProviders).map((key) => {
-        if (debugLogs) {
-            console.log(
-                "[Better Auth Tauri] Appending callback URL to social provider",
-                key,
-                `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
-            )
-        }
+        if (userAgent?.includes("tauri")) {
+            if (debugLogs) {
+                console.log(
+                    "[Better Auth Tauri] Appending callback URL to social provider",
+                    key,
+                    `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
+                )
+            }
 
-        ctx.context.options.socialProviders![key as SocialProvider]!.redirectURI =
-            `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
+            ctx.context.options.socialProviders![key as SocialProvider]!.redirectURI =
+                `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
+        } else {
+            if (debugLogs) {
+                console.log("[Better Auth Tauri] Removing callback URL from social provider", key)
+            }
+
+            ctx.context.options.socialProviders![key as SocialProvider]!.redirectURI = undefined
+        }
     })
 }

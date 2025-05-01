@@ -63,8 +63,7 @@ export const tauri = ({
                             callbackURL,
                             ctx,
                             debugLogs,
-                            scheme,
-                            url
+                            scheme
                         })
 
                         checkCallbackURL({
