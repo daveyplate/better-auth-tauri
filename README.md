@@ -56,12 +56,13 @@ In your `tauri.conf.json` file, add your deep link scheme:
 
 ```json
 {
-  "plugins": {
-    "deep_link": {
-      "domains": ["your-app"],
-      "schema": "your-app"
+    "plugins": {
+        "deep-link": {
+            "desktop": {
+                "schemes": ["my-app"]
+            }
+        }
     }
-  }
 }
 ```
 
