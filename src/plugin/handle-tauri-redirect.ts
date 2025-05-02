@@ -29,5 +29,7 @@ export function handleTauriRedirect({
         console.log("[Better Auth Tauri] Redirecting to:", redirectTo, url.pathname)
     }
 
-    throw ctx.redirect(redirectTo)
+    throw ctx.redirect(
+        `${ctx.context.baseURL}/tauri/redirect?tauriRedirect=${encodeURIComponent(redirectTo)}&hideUI=true`
+    )
 }
