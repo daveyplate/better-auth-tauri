@@ -18,9 +18,10 @@ export function appendCallbackURL({
     if (ctx.path !== "/sign-in/social") return
 
     const userAgent = ctx.request.headers.get("user-agent")
+    const platform = ctx.request.headers.get("platform") || ""
 
     Object.keys(ctx.context.options.socialProviders).map((key) => {
-        if (userAgent?.includes("tauri")) {
+        if (userAgent?.includes("tauri") && !["android", "ios"].includes(platform)) {
             if (debugLogs) {
                 console.log(
                     "[Better Auth Tauri] Appending callback URL to social provider",

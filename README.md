@@ -22,8 +22,9 @@ bun add @daveyplate/better-auth-tauri
 
 This plugin requires the following Tauri plugins:
 
-- `@tauri-apps/plugin-http`
 - `@tauri-apps/plugin-deep-link`
+- `@tauri-apps/plugin-http`
+- `@tauri-apps/plugin-os`
 
 Make sure these are installed and properly configured in your Tauri application.
 

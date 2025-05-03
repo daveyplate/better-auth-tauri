@@ -1,10 +1,15 @@
 import { isTauri } from "@tauri-apps/api/core"
 import { openUrl } from "@tauri-apps/plugin-opener"
+import { platform } from "@tauri-apps/plugin-os"
+
 import type { BetterFetchOption } from "better-auth/client"
 import type { AuthClient } from "../types/auth-client"
 
 const useOpener = () =>
-    isTauri() && (window.location.protocol === "tauri:" || process.env.NODE_ENV === "production")
+    isTauri() &&
+    (window.location.protocol === "tauri:" ||
+        process.env.NODE_ENV === "production" ||
+        platform() !== "macos")
 
 export type SocialSignInParams = Parameters<AuthClient["signIn"]["social"]>[0]
 type SocialSignInData = {
@@ -42,7 +47,14 @@ export async function signInSocial({
         const data = await authClient.signIn.social({
             disableRedirect: useOpener(),
             ...params,
-            fetchOptions: { ...fetchOptions, throw: true }
+            fetchOptions: {
+                ...fetchOptions,
+                throw: true,
+                headers: {
+                    ...fetchOptions.headers,
+                    Platform: platform()
+                }
+            }
         })
 
         handleSocialSignIn(data)
