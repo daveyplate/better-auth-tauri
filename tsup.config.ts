@@ -6,7 +6,7 @@ export default defineConfig((env) => {
         entry: {
             index: "./src/index.ts",
             react: "./src/react.ts",
-            server: "./src/server.ts"
+            plugin: "./src/plugin.ts"
         },
         format: ["esm", "cjs"],
         splitting: true,
