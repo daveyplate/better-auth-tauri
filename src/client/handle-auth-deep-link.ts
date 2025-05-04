@@ -9,10 +9,18 @@ export async function handleAuthDeepLink({
     onRequest,
     onSuccess
 }: SetupBetterAuthTauriOptions & { url: string }) {
-    const basePath = "/api/auth"
-    if (!url.startsWith(`${scheme}:/${basePath}`)) return false
+    const basePath = "/api/auth/"
 
-    const href = url.replace(`${scheme}:/${basePath}`, "")
+    const newUrl = new URL(url)
+
+    if (!url.startsWith(`${scheme}:/${basePath}`) && !newUrl.pathname.startsWith(basePath))
+        return false
+
+    const href = `/${
+        newUrl.protocol.startsWith("http")
+            ? url.replace(newUrl.origin, "").replace(basePath, "")
+            : url.replace(`${scheme}:/${basePath}`, "")
+    }`
 
     if (debugLogs) {
         console.log("[Better Auth Tauri] handleAuthDeepLink fetch", href)
