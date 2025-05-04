@@ -4,6 +4,7 @@ import { platform } from "@tauri-apps/plugin-os"
 
 import type { BetterFetchOption } from "better-auth/client"
 import type { AuthClient } from "../types/auth-client"
+import type { FetchError } from "../types/fetch-error"
 
 const useOpener = () =>
     isTauri() &&
@@ -18,12 +19,7 @@ type SocialSignInData = {
 }
 type SocialSignInResult = {
     data: SocialSignInData | null
-    error: {
-        code?: string | undefined
-        message?: string | undefined
-        status: number
-        statusText: string
-    } | null
+    error: FetchError | null
 }
 
 export interface SignInSocialProps extends SocialSignInParams {
