@@ -9,7 +9,7 @@ const useOpener = () =>
     isTauri() &&
     (window.location.protocol === "tauri:" ||
         process.env.NODE_ENV === "production" ||
-        platform() !== "macos")
+        (isTauri() && platform() !== "macos"))
 
 export type SocialSignInParams = Parameters<AuthClient["signIn"]["social"]>[0]
 type SocialSignInData = {
