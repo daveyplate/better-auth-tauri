@@ -52,7 +52,7 @@ export async function signInSocial({
                 throw: true,
                 headers: {
                     ...fetchOptions.headers,
-                    Platform: platform()
+                    ...(isTauri() && { Platform: platform() })
                 }
             }
         })
