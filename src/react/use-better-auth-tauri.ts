@@ -8,6 +8,7 @@ export function useBetterAuthTauri({
     authClient,
     debugLogs,
     mainWindowLabel,
+    matcher = "*/api/*",
     scheme,
     onError,
     onRequest,
@@ -18,10 +19,11 @@ export function useBetterAuthTauri({
             authClient,
             debugLogs,
             mainWindowLabel,
+            matcher,
             scheme,
             onError,
             onRequest,
             onSuccess
         })
-    }, [authClient, debugLogs, mainWindowLabel, scheme, onError, onRequest, onSuccess])
+    }, [authClient, debugLogs, mainWindowLabel, matcher, scheme, onError, onRequest, onSuccess])
 }

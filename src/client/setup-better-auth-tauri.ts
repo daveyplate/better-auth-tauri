@@ -12,6 +12,7 @@ export interface SetupBetterAuthTauriOptions {
     authClient: AuthClient
     debugLogs?: boolean
     mainWindowLabel?: string
+    matcher?: string
     scheme: string
     onError?: (error: FetchError) => void
     onRequest?: (href: string) => void
@@ -22,6 +23,7 @@ export function setupBetterAuthTauri({
     authClient,
     debugLogs,
     mainWindowLabel = "main",
+    matcher = "*/api/*",
     scheme,
     onError,
     onRequest,
@@ -34,7 +36,9 @@ export function setupBetterAuthTauri({
             console.log("[Better Auth Tauri] setupTauriFetch")
         }
 
-        setupTauriFetch()
+        setupTauriFetch({
+            matcher
+        })
 
         handleAuthFetchParam({
             authClient,
