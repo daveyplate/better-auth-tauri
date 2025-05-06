@@ -12,7 +12,7 @@ export interface SetupBetterAuthTauriOptions {
     authClient: AuthClient
     debugLogs?: boolean
     mainWindowLabel?: string
-    matcher?: string
+    matcher?: string | null
     scheme: string
     onError?: (error: FetchError) => void
     onRequest?: (href: string) => void

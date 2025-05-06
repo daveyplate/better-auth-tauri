@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@daveyplate/tauri-fetch':
-        specifier: '>=1.0.3'
-        version: 1.0.3(@tauri-apps/api@2.5.0)(@tauri-apps/plugin-http@2.4.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: '>=1.0.4'
+        version: 1.0.4(@tauri-apps/api@2.5.0)(@tauri-apps/plugin-http@2.4.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tauri-apps/api':
         specifier: '>=2.5.0'
         version: 2.5.0
@@ -72,8 +72,8 @@ packages:
   '@better-fetch/fetch@1.1.18':
     resolution: {integrity: sha512-rEFOE1MYIsBmoMJtQbl32PGHHXuG2hDxvEd7rUHE0vCBoFQVSDqaVs9hkZEtHCxRoY+CljXKFCOuJ8uxqw1LcA==}
 
-  '@daveyplate/tauri-fetch@1.0.3':
-    resolution: {integrity: sha512-bcWpcL1yV34SaGgvLeWy2PMmGtCJneSyPQeCGM/NoGyxGVYDXQO6H16Vm5D3WAK9oLGarouxslpsazpOHpr9mQ==}
+  '@daveyplate/tauri-fetch@1.0.4':
+    resolution: {integrity: sha512-WygfL+xjzvBLWEqgE0usoWoYvgbslqRUffVCGZPSelfB/weh4DZwjjApKRysE6v2pw05v8SH3bRhYl8gBKvfkQ==}
     peerDependencies:
       '@tauri-apps/api': '>=2.5.0'
       '@tauri-apps/plugin-http': '>=2.4.3'
@@ -899,7 +899,7 @@ snapshots:
 
   '@better-fetch/fetch@1.1.18': {}
 
-  '@daveyplate/tauri-fetch@1.0.3(@tauri-apps/api@2.5.0)(@tauri-apps/plugin-http@2.4.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@daveyplate/tauri-fetch@1.0.4(@tauri-apps/api@2.5.0)(@tauri-apps/plugin-http@2.4.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@tauri-apps/api': 2.5.0
       '@tauri-apps/plugin-http': 2.4.3
