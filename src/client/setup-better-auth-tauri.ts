@@ -7,7 +7,6 @@ import { platform } from "@tauri-apps/plugin-os"
 import type { AuthClient } from "../types/auth-client"
 import type { FetchError } from "../types/fetch-error"
 import { handleAuthDeepLink } from "./handle-auth-deep-link"
-import { handleAuthFetchParam } from "./handle-auth-fetch-param"
 
 export interface SetupBetterAuthTauriOptions {
     authClient: AuthClient
@@ -41,13 +40,13 @@ export function setupBetterAuthTauri({
             matcher
         })
 
-        handleAuthFetchParam({
-            authClient,
-            debugLogs,
-            onError,
-            onRequest,
-            onSuccess
-        })
+        // handleAuthFetchParam({
+        //     authClient,
+        //     debugLogs,
+        //     onError,
+        //     onRequest,
+        //     onSuccess
+        // })
     } else {
         if (debugLogs) {
             console.log("[Better Auth Tauri] skip setupTauriFetch")

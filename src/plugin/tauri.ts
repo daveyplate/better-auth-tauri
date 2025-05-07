@@ -2,7 +2,6 @@ import type { BetterAuthPlugin } from "better-auth"
 import { createAuthMiddleware } from "better-auth/plugins"
 import { appendCallbackURL } from "./append-callback-url"
 import { checkCallbackURL } from "./check-callback-url"
-import { handleTauriRedirect } from "./handle-tauri-redirect"
 import { redirectEndpoint } from "./redirect-endpoint"
 
 export const tauri = ({
@@ -52,12 +51,12 @@ export const tauri = ({
                             )
                         }
 
-                        handleTauriRedirect({
-                            baseURL,
-                            ctx,
-                            debugLogs,
-                            url
-                        })
+                        // handleTauriRedirect({
+                        //     baseURL,
+                        //     ctx,
+                        //     debugLogs,
+                        //     url
+                        // })
 
                         appendCallbackURL({
                             callbackURL,
