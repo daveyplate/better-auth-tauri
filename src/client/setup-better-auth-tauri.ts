@@ -3,6 +3,7 @@ import { isTauri } from "@tauri-apps/api/core"
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow"
 import { getCurrent, onOpenUrl } from "@tauri-apps/plugin-deep-link"
 
+import { platform } from "@tauri-apps/plugin-os"
 import type { AuthClient } from "../types/auth-client"
 import type { FetchError } from "../types/fetch-error"
 import { handleAuthDeepLink } from "./handle-auth-deep-link"
@@ -31,7 +32,7 @@ export function setupBetterAuthTauri({
 }: SetupBetterAuthTauriOptions) {
     if (!isTauri()) return
 
-    if (window.location.protocol === "tauri:" || process.env.NODE_ENV === "production") {
+    if (window.location.protocol === "tauri:" && platform() === "macos") {
         if (debugLogs) {
             console.log("[Better Auth Tauri] setupTauriFetch")
         }
