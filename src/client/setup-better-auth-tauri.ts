@@ -39,14 +39,6 @@ export function setupBetterAuthTauri({
         setupTauriFetch({
             matcher
         })
-
-        // handleAuthFetchParam({
-        //     authClient,
-        //     debugLogs,
-        //     onError,
-        //     onRequest,
-        //     onSuccess
-        // })
     } else {
         if (debugLogs) {
             console.log("[Better Auth Tauri] skip setupTauriFetch")

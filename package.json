@@ -3,10 +3,7 @@
     "homepage": "https://github.com/daveyplate/better-auth-tauri",
     "version": "0.0.23",
     "description": "Better Auth Tauri Plugin",
-    "files": [
-        "src",
-        "dist"
-    ],
+    "files": ["src", "dist"],
     "scripts": {
         "build": "tsup --clean --dts",
         "dev": "tsc-watch --onSuccess 'biome check --fix'",
@@ -47,9 +44,7 @@
             }
         }
     },
-    "keywords": [
-        "typescript"
-    ],
+    "keywords": ["typescript"],
     "author": "daveycodez",
     "license": "MIT",
     "devDependencies": {
@@ -62,7 +57,7 @@
         "tsc-watch": "^6.2.1",
         "tsup": "^8.4.0",
         "tsx": "^4.19.4",
-        "turbo": "^2.5.2",
+        "turbo": "^2.5.3",
         "typescript": "^5.8.3"
     },
     "peerDependencies": {

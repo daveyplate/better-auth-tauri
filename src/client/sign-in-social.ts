@@ -7,10 +7,7 @@ import type { AuthClient } from "../types/auth-client"
 import type { FetchError } from "../types/fetch-error"
 
 const useOpener = () =>
-    isTauri() &&
-    (window.location.protocol === "tauri:" ||
-        process.env.NODE_ENV === "production" ||
-        (isTauri() && platform() !== "macos"))
+    isTauri() && (window.location.protocol === "tauri:" || platform() !== "macos")
 
 export type SocialSignInParams = Parameters<AuthClient["signIn"]["social"]>[0]
 type SocialSignInData = {
@@ -48,7 +45,7 @@ export async function signInSocial({
                 throw: true,
                 headers: {
                     ...fetchOptions.headers,
-                    ...(isTauri() && { Platform: platform() })
+                    ...(useOpener() && { Platform: platform() })
                 }
             }
         })
@@ -61,7 +58,13 @@ export async function signInSocial({
     const response = await authClient.signIn.social({
         disableRedirect: useOpener(),
         ...params,
-        fetchOptions
+        fetchOptions: {
+            ...fetchOptions,
+            headers: {
+                ...fetchOptions?.headers,
+                ...(useOpener() && { Platform: platform() })
+            }
+        }
     })
 
     handleSocialSignIn(response.data)

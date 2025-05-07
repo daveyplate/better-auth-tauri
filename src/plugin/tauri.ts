@@ -51,13 +51,6 @@ export const tauri = ({
                             )
                         }
 
-                        // handleTauriRedirect({
-                        //     baseURL,
-                        //     ctx,
-                        //     debugLogs,
-                        //     url
-                        // })
-
                         appendCallbackURL({
                             callbackURL,
                             ctx,
