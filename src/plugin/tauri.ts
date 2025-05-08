@@ -5,7 +5,6 @@ import { checkCallbackURL } from "./check-callback-url"
 import { redirectEndpoint } from "./redirect-endpoint"
 
 export const tauri = ({
-    baseURL = "tauri://localhost",
     callbackURL = "/",
     debugLogs,
     scheme,
