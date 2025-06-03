@@ -165,6 +165,27 @@ function App() {
 <!-- Your Svelte components -->
 ```
 
+## Social Sign In
+
+To properly use Social Sign in with the Opener plugin we provide a helper function:
+
+```ts
+import { signInSocial } from "@daveyplate/better-auth-tauri"
+
+export function Page() {
+  return (
+    <Button onClick={() => {
+      signInSocial({
+        provider: "google",
+        callbackURL: "/"
+      })
+    }}>
+      Sign in with Google
+    </Button>
+  )
+}
+```
+
 ## How It Works
 
 This plugin enables seamless authentication in Tauri apps by:
