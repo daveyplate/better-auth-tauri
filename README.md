@@ -167,6 +167,9 @@ function App() {
 
 ## Social Sign In
 
+First install the official Tauri Opener plugin:
+https://v2.tauri.app/plugin/opener/
+
 To properly use Social Sign in with the Opener plugin we provide a helper function:
 
 ```ts
