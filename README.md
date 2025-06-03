@@ -174,14 +174,14 @@ import { signInSocial } from "@daveyplate/better-auth-tauri"
 
 export function Page() {
   return (
-    <Button onClick={() => {
+    <button onClick={() => {
       signInSocial({
         provider: "google",
         callbackURL: "/"
       })
     }}>
       Sign in with Google
-    </Button>
+    </button>
   )
 }
 ```
