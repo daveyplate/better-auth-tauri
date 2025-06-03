@@ -171,11 +171,13 @@ To properly use Social Sign in with the Opener plugin we provide a helper functi
 
 ```ts
 import { signInSocial } from "@daveyplate/better-auth-tauri"
+import { authClient } from "@/lib/auth-client"
 
 export function Page() {
   return (
     <button onClick={() => {
       signInSocial({
+        authClient,
         provider: "google",
         callbackURL: "/"
       })
