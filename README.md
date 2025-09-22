@@ -181,8 +181,7 @@ export function Page() {
     <button onClick={() => {
       signInSocial({
         authClient,
-        provider: "google",
-        callbackURL: "/"
+        provider: "google"
       })
     }}>
       Sign in with Google
