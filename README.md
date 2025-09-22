@@ -128,7 +128,7 @@ function App() {
 
 ### Option 3: Svelte Setup
 
-```svelte
+```typescript
 <script>
   import { onMount, onDestroy } from "svelte";
   import { setupBetterAuthTauri } from "@daveyplate/better-auth-tauri";
@@ -158,11 +158,9 @@ function App() {
   });
   
   onDestroy(() => {
-    if (cleanup) cleanup();
+    cleanup?.();
   });
 </script>
-
-<!-- Your Svelte components -->
 ```
 
 ## Social Sign In
