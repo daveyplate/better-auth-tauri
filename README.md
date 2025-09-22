@@ -34,7 +34,7 @@ Make sure these are installed and properly configured in your Tauri application.
 
 ```typescript
 import { betterAuth } from "better-auth";
-import { tauri } from "@daveyplate/better-auth-tauri/server";
+import { tauri } from "@daveyplate/better-auth-tauri/plugin";
 
 export const auth = betterAuth({
   // Your existing Better Auth configuration
@@ -189,6 +189,25 @@ export function Page() {
     </button>
   )
 }
+```
+
+## macOS Cookies
+
+You must update your auth-client.ts to use Tauri HTTP plugin for macOS in production in order for cookies to work:
+
+```tsx
+import { fetch as tauriFetch } from "@tauri-apps/plugin-http"
+import { platform } from "@tauri-apps/plugin-os"
+import { createAuthClient } from "better-auth/react"
+
+export const authClient = createAuthClient({
+    fetchOptions: {
+        customFetchImpl: (...params) =>
+            platform() === "macos" && window.location.protocol === "tauri:"
+                ? tauriFetch(...params)
+                : fetch(...params)
+    }
+})
 ```
 
 ## How It Works

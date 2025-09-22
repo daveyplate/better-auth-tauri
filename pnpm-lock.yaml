@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@daveyplate/tauri-fetch':
-        specifier: '>=1.0.4'
-        version: 1.0.4(@tauri-apps/api@2.5.0)(@tauri-apps/plugin-http@2.4.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@tauri-apps/api':
         specifier: '>=2.5.0'
         version: 2.5.0
@@ -127,14 +124,6 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
-
-  '@daveyplate/tauri-fetch@1.0.4':
-    resolution: {integrity: sha512-WygfL+xjzvBLWEqgE0usoWoYvgbslqRUffVCGZPSelfB/weh4DZwjjApKRysE6v2pw05v8SH3bRhYl8gBKvfkQ==}
-    peerDependencies:
-      '@tauri-apps/api': '>=2.5.0'
-      '@tauri-apps/plugin-http': '>=2.4.3'
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
 
   '@esbuild/aix-ppc64@0.25.10':
     resolution: {integrity: sha512-0NFWnA+7l41irNuaSVlLfgNT12caWJVLzp5eAVhZ0z1qpxbockccEt3s+149rE64VUI3Ml2zt8Nv5JVc4QXTsw==}
@@ -1033,13 +1022,6 @@ snapshots:
 
   '@biomejs/cli-win32-x64@2.2.4':
     optional: true
-
-  '@daveyplate/tauri-fetch@1.0.4(@tauri-apps/api@2.5.0)(@tauri-apps/plugin-http@2.4.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
-    dependencies:
-      '@tauri-apps/api': 2.5.0
-      '@tauri-apps/plugin-http': 2.4.3
-      react: 19.1.1
-      react-dom: 19.1.1(react@19.1.1)
 
   '@esbuild/aix-ppc64@0.25.10':
     optional: true
