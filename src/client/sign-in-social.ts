@@ -43,7 +43,7 @@ export async function signInSocial({
         const data = await authClient.signIn.social({
             disableRedirect: useOpener(),
             ...params,
-            callbackURL: undefined,
+            callbackURL: useOpener() ? undefined : params.callbackURL,
             fetchOptions: {
                 ...fetchOptions,
                 throw: true,
@@ -62,7 +62,7 @@ export async function signInSocial({
     const response = await authClient.signIn.social({
         disableRedirect: useOpener(),
         ...params,
-        callbackURL: undefined,
+        callbackURL: useOpener() ? undefined : params.callbackURL,
         fetchOptions: {
             ...fetchOptions,
             headers: {
