@@ -43,6 +43,7 @@ export async function signInSocial({
         const data = await authClient.signIn.social({
             disableRedirect: useOpener(),
             ...params,
+            callbackURL: undefined,
             fetchOptions: {
                 ...fetchOptions,
                 throw: true,
