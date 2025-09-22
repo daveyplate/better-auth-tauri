@@ -7,7 +7,8 @@ import type { AuthClient } from "../types/auth-client"
 import type { FetchError } from "../types/fetch-error"
 
 const useOpener = () =>
-    isTauri() && (window.location.protocol === "tauri:" || platform() !== "macos")
+    isTauri() &&
+    (window.location.protocol === "tauri:" || platform() !== "macos")
 
 export type SocialSignInParams = Parameters<AuthClient["signIn"]["social"]>[0]
 type SocialSignInData = {
@@ -29,7 +30,9 @@ export async function signInSocial(
     }
 ): Promise<SocialSignInData>
 
-export async function signInSocial(params: SignInSocialProps): Promise<SocialSignInResult>
+export async function signInSocial(
+    params: SignInSocialProps
+): Promise<SocialSignInResult>
 
 export async function signInSocial({
     authClient,

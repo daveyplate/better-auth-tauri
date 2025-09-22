@@ -1,6 +1,5 @@
-import type { AuthContext } from "better-auth/types"
-
 import type { MiddlewareContext, MiddlewareOptions } from "better-auth"
+import type { AuthContext } from "better-auth/types"
 
 export function checkCallbackURL({
     ctx,
@@ -25,7 +24,11 @@ export function checkCallbackURL({
     const callbackURL = searchParams.get("callbackURL")
 
     if (debugLogs) {
-        console.log("[Better Auth Tauri] Callback URL:", callbackURL, url.pathname)
+        console.log(
+            "[Better Auth Tauri] Callback URL:",
+            callbackURL,
+            url.pathname
+        )
     }
 
     if (!callbackURL?.startsWith(`${scheme}://`)) return
@@ -36,7 +39,11 @@ export function checkCallbackURL({
     const deepLinkURL = `${scheme}:/${url.pathname}?${searchParams.toString()}`
 
     if (debugLogs) {
-        console.log("[Better Auth Tauri] Redirecting to:", deepLinkURL, url.pathname)
+        console.log(
+            "[Better Auth Tauri] Redirecting to:",
+            deepLinkURL,
+            url.pathname
+        )
     }
 
     throw ctx.redirect(

@@ -13,7 +13,10 @@ export async function handleAuthDeepLink({
 
     const newUrl = new URL(url)
 
-    if (!url.startsWith(`${scheme}:/${basePath}`) && !newUrl.pathname.startsWith(basePath))
+    if (
+        !url.startsWith(`${scheme}:/${basePath}`) &&
+        !newUrl.pathname.startsWith(basePath)
+    )
         return false
 
     const href = `/${
@@ -30,18 +33,28 @@ export async function handleAuthDeepLink({
     const response = await authClient.$fetch(href)
 
     if (debugLogs) {
-        console.log("[Better Auth Tauri] handleAuthDeepLink response", response, href)
+        console.log(
+            "[Better Auth Tauri] handleAuthDeepLink response",
+            response,
+            href
+        )
     }
 
     if (response.error?.message || response.error?.statusText) {
         if (debugLogs) {
-            console.error("[Better Auth Tauri] handleAuthDeepLink error", response.error, href)
+            console.error(
+                "[Better Auth Tauri] handleAuthDeepLink error",
+                response.error,
+                href
+            )
         }
 
         onError?.(response.error)
     } else {
         const searchParams = new URL(url).searchParams
-        const callbackURL = searchParams.get("callbackURL")?.replace(`${scheme}:/`, "")
+        const callbackURL = searchParams
+            .get("callbackURL")
+            ?.replace(`${scheme}:/`, "")
 
         if (debugLogs) {
             console.log(

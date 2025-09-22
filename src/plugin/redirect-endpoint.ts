@@ -9,7 +9,9 @@ export const redirectEndpoint = (successText: string) =>
         },
         async (ctx) => {
             if (!ctx.request) return
-            const tauriRedirect = new URL(ctx.request.url).searchParams.get("tauriRedirect")
+            const tauriRedirect = new URL(ctx.request.url).searchParams.get(
+                "tauriRedirect"
+            )
             const hideUI = new URL(ctx.request.url).searchParams.get("hideUI")
             return new Response(
                 `${hideUI ? "" : html(successText)}<script>window.location.href = '${tauriRedirect}';</script>`,

@@ -19,7 +19,7 @@ export function appendCallbackURL({
 
     const platform = ctx.request.headers.get("platform") || ""
 
-    Object.keys(ctx.context.options.socialProviders).map((key) => {
+    Object.keys(ctx.context.options.socialProviders).forEach((key) => {
         if (platform && !["android", "ios"].includes(platform)) {
             if (debugLogs) {
                 console.log(
@@ -29,14 +29,21 @@ export function appendCallbackURL({
                 )
             }
 
-            ctx.context.options.socialProviders![key as SocialProvider]!.redirectURI =
+            ctx.context.options.socialProviders![
+                key as SocialProvider
+            ]!.redirectURI =
                 `${ctx.context.baseURL}/callback/${key}?callbackURL=${scheme}:/${callbackURL}`
         } else {
             if (debugLogs) {
-                console.log("[Better Auth Tauri] Removing callback URL from social provider", key)
+                console.log(
+                    "[Better Auth Tauri] Removing callback URL from social provider",
+                    key
+                )
             }
 
-            ctx.context.options.socialProviders![key as SocialProvider]!.redirectURI = undefined
+            ctx.context.options.socialProviders![
+                key as SocialProvider
+            ]!.redirectURI = undefined
         }
     })
 }

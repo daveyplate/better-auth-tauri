@@ -25,5 +25,14 @@ export function useBetterAuthTauri({
             onRequest,
             onSuccess
         })
-    }, [authClient, debugLogs, mainWindowLabel, matcher, scheme, onError, onRequest, onSuccess])
+    }, [
+        authClient,
+        debugLogs,
+        mainWindowLabel,
+        matcher,
+        scheme,
+        onError,
+        onRequest,
+        onSuccess
+    ])
 }

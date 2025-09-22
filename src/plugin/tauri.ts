@@ -30,12 +30,17 @@ export const tauri = ({
                         if (!ctx.request) return
 
                         // Always use /api/auth as basePath when redirecting to Tauri
-                        const basePath = ctx.context.options.basePath ?? "/api/auth"
+                        const basePath =
+                            ctx.context.options.basePath ?? "/api/auth"
                         const url = new URL(ctx.request.url)
-                        url.pathname = url.pathname.replace(basePath, "/api/auth")
+                        url.pathname = url.pathname.replace(
+                            basePath,
+                            "/api/auth"
+                        )
 
                         if (debugLogs) {
-                            const userAgent = ctx.request.headers.get("user-agent")
+                            const userAgent =
+                                ctx.request.headers.get("user-agent")
                             const host = ctx.request.headers.get("host")
 
                             console.log(
