@@ -196,6 +196,7 @@ export function Page() {
 You must update your auth-client.ts to use Tauri HTTP plugin for macOS in production in order for cookies to work:
 
 ```tsx
+import { isTauri } from "@tauri-apps/api/core"
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http"
 import { platform } from "@tauri-apps/plugin-os"
 import { createAuthClient } from "better-auth/react"
@@ -203,7 +204,7 @@ import { createAuthClient } from "better-auth/react"
 export const authClient = createAuthClient({
     fetchOptions: {
         customFetchImpl: (...params) =>
-            platform() === "macos" && window.location.protocol === "tauri:"
+            isTauri() && platform() === "macos" && window.location.protocol === "tauri:"
                 ? tauriFetch(...params)
                 : fetch(...params)
     }
