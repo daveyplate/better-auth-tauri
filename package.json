@@ -1,7 +1,7 @@
 {
     "name": "@daveyplate/better-auth-tauri",
     "homepage": "https://github.com/daveyplate/better-auth-tauri",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Better Auth Tauri Plugin",
     "files": [
         "src",
