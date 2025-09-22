@@ -40,7 +40,10 @@ export async function handleAuthDeepLink({
         )
     }
 
-    if (response.error?.message || response.error?.statusText) {
+    if (
+        response.error?.status !== 302 &&
+        (response.error?.message || response.error?.statusText)
+    ) {
         if (debugLogs) {
             console.error(
                 "[Better Auth Tauri] handleAuthDeepLink error",
