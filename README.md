@@ -44,7 +44,7 @@ export const auth = betterAuth({
       scheme: "your-app", // Your app's deep link scheme
       callbackURL: "/", // Optional: Where to redirect after auth (default: "/")
       successText: "Authentication successful! You can close this window.", // Optional
-      successURL: "/auth/success", // Optional: Custom success page URL that will receive a ?tauriRedirect search parameter
+      successURL: "/auth/success", // Optional: Custom success page URL that will receive a ?redirectTo search parameter
       debugLogs: false, // Optional: Enable debug logs
     }),
   ],

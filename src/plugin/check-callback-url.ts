@@ -16,8 +16,8 @@ export function checkCallbackURL({
 }) {
     if (!ctx.request) return
 
-    const userAgent = ctx.request.headers.get("user-agent")
-    if (userAgent?.includes("Tauri/") || userAgent?.includes("tauri")) return
+    // const userAgent = ctx.request.headers.get("user-agent")
+    // if (userAgent?.includes("Tauri/") || userAgent?.includes("tauri")) return
 
     // If not Tauri user agent then check callbackURL for deep link redirects
     const searchParams = url.searchParams
@@ -48,7 +48,7 @@ export function checkCallbackURL({
 
     throw ctx.redirect(
         successURL
-            ? `${successURL}?tauriRedirect=${encodeURIComponent(deepLinkURL)}`
-            : `${ctx.context.baseURL}/tauri/redirect?tauriRedirect=${encodeURIComponent(deepLinkURL)}`
+            ? `${successURL}?redirectTo=${encodeURIComponent(deepLinkURL)}`
+            : `${ctx.context.baseURL}/callback/success?redirectTo=${encodeURIComponent(deepLinkURL)}`
     )
 }

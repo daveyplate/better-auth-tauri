@@ -13,11 +13,10 @@ export function appendCallbackURL({
     debugLogs?: boolean
     scheme: string
 }) {
-    if (!ctx.request) return
     if (!ctx.context.options.socialProviders) return
     if (ctx.path !== "/sign-in/social") return
 
-    const platform = ctx.request.headers.get("platform") || ""
+    const platform = ctx.request?.headers.get("platform") || ""
 
     Object.keys(ctx.context.options.socialProviders).forEach((key) => {
         if (platform && !["android", "ios"].includes(platform)) {

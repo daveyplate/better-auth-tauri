@@ -1,8 +1,8 @@
 import type { BetterAuthPlugin } from "better-auth"
 import { createAuthMiddleware } from "better-auth/plugins"
 import { appendCallbackURL } from "./append-callback-url"
+import { callbackSuccess } from "./callback-success"
 import { checkCallbackURL } from "./check-callback-url"
-import { redirectEndpoint } from "./redirect-endpoint"
 
 export const tauri = ({
     callbackURL = "/",
@@ -25,7 +25,7 @@ export const tauri = ({
                 {
                     matcher: (context) =>
                         !context.request?.url?.includes("/reset-password") &&
-                        !context.request?.url?.includes("/tauri/redirect"),
+                        !context.request?.url?.includes("/callback/success"),
                     handler: createAuthMiddleware(async (ctx) => {
                         if (!ctx.request) return
 
@@ -74,6 +74,6 @@ export const tauri = ({
             ]
         },
         endpoints: {
-            getTauriRedirect: redirectEndpoint(successText)
+            getCallbackSuccess: callbackSuccess(successText)
         }
     }) satisfies BetterAuthPlugin
