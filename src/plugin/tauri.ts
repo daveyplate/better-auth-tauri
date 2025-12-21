@@ -74,6 +74,6 @@ export const tauri = ({
             ]
         },
         endpoints: {
-            getCallbackSuccess: callbackSuccess(successText)
-        }
+            getCallbackSuccess: callbackSuccess(successText, scheme),
+        },
     }) satisfies BetterAuthPlugin
