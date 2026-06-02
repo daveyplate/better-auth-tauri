@@ -1,5 +1,5 @@
 import type { BetterAuthPlugin } from "better-auth"
-import { createAuthMiddleware } from "better-auth/plugins"
+import { createAuthMiddleware } from "better-auth/api"
 import { appendCallbackURL } from "./append-callback-url"
 import { callbackSuccess } from "./callback-success"
 import { checkCallbackURL } from "./check-callback-url"

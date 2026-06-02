@@ -1,4 +1,4 @@
-import { createAuthEndpoint } from "better-auth/plugins"
+import { createAuthEndpoint } from "better-auth/api"
 import { html } from "./html"
 
 export const callbackSuccess = (successText: string) =>
